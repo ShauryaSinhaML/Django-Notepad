@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+h4 {
+    position: relative;
+}
+
+.icons {
+    position: absolute;
+    right: 10px;
+}
+</style>
+    <div class = "text-center mt-5">
+        <h2>TO-DO List
+        <a  data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            <i class="fas fa-plus fa-sm" ></i>
+        </a>
+        </h2>
+    </div>
+    <hr>
+
+    
+    <div class="collapse" id="collapseExample">
+    <div class="card card-body">
+        <div class = "text-center mt-5">
+            <form method="POST">
+            {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_title">Title</label>
+                    {{ form.title }}
+                </div>
+                <div class="form-group">
+                    <label for="id_due_date">Due-Date</label>
+                    {{ form.due_date }}
+                </div>
+                <div class="form-group form-check">
+                    {{ form.label }}
+                    <label for="id_label">Label</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Create</button>
+            </form>
+        </div>
+    </div>
+    </div>
+
+    
+    
+    <div class="row">
+        {% for note in to_do_list %}
+        <div class="col-12">
+            {% include "note_snippet.html" with note_snippet_var=note type="DELETE" %}
+        </div>
+        {% endfor %}
+            
+        
+    </div>
+
+    <div class = "text-center mt-5">
+        <h2>Finished List</h2>
+    </div>
+
+    <hr>
+    <div class="row">
+        {% for note in finished_list %}
+        <div class="col-12">
+            {% include "note_snippet.html" with note_snippet_var=note type="ADD" %}
+        </div>
+        {% endfor %}
+            
+        
+    </div>
+{% endblock content %}
+        
+        
